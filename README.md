@@ -22,13 +22,13 @@ Simple bash script to set an animated battery as desktop wallpaper. It's shows c
 ### How to install
 Follow the steps below -
 
-+ Install *acpi*, *hsetroot* or *wallpaper* 
++ Install *acpi*, *xrandr*, *hsetroot* or *wallpaper* 
 ```
 # On Archlinux
-sudo pacman -Sy acpi hsetroot
+sudo pacman -Sy acpi xorg-xrandr hsetroot
 
 # On Ubuntu or Debian
-sudo apt-get install acpi hsetroot
+sudo apt-get install acpi x11-xserver-utils hsetroot
 
 # On MacOS
 brew install wallpaper
@@ -65,7 +65,8 @@ Available options:
 + Shows battery charging animation.
 + Stop animation when battery is fully charged.
 + When not charging, icon changes according to battery percentage.
-+ Tested on *Openbox*, *i3wm*, *Fluxbox*, *Fvwm* *Swaywm* & *MATE*.
++ Support dual or more batteries.
++ Tested on - **WM:** *Openbox*, *i3wm*, *Fluxbox*, *Fvwm*, *Swaywm* & **DE:** *Pantheon*, *Gnome(ubuntu)*, *Deepin*, *Cinnamon*, *XFCE*, *LXDE*, *MATE*.
 
 ### Charging
 
@@ -159,9 +160,7 @@ Available options:
 </p>
 
 ### FYI
-+ Yeah, it's *very simple*, i know.
-+ I've tested it only on Window Managers (Openbox, i3wm, fluxbox, etc)
-+ Currently, Not Working on XFCE & Maybe on KDE too.
++ Currently, KDE is not supported.
 + If you can improve it, you're welcome.
 + You can add ***bwall -option &*** to your wm autostart file to set it as wallpaper after login.
 + Have Fun!

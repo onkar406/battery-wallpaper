@@ -23,10 +23,24 @@ case "$OSTYPE" in
 	*) CHARGE=0 ;;
 esac
 
+## For XFCE
+SCREEN="$(xrandr --listactivemonitors | awk -F ' ' 'END {print $1}' | tr -d \:)"
+MONITOR="$(xrandr --listactivemonitors | awk -F ' ' 'END {print $2}' | tr -d \*+)"
+
 case "$OSTYPE" in 
 	darwin*) SETTER="wallpaper set" ;;
-	linux*) if [ -n "$SWAYSOCK" ]; then SETTER="eval ogurictl output '*' --image"; elif [[ "$DESKTOP_SESSION" = "mate" ]]; then SETTER="gsettings set org.mate.background picture-filename"; else SETTER="hsetroot -fill"; fi ;;
-	*) if [ -n "$SWAYSOCK" ]; then SETTER="eval ogurictl output '*' --image"; elif [[ "$DESKTOP_SESSION" = "mate" ]]; then SETTER="gsettings set org.mate.background picture-filename"; else SETTER="hsetroot -fill"; fi ;;
+	linux*) if [ -n "$SWAYSOCK" ]; then SETTER="eval ogurictl output '*' --image"; 
+	elif [[ "$DESKTOP_SESSION" =~ ^(MATE|Mate|mate)$ ]]; then SETTER="gsettings set org.mate.background picture-filename"; 
+	elif [[ "$DESKTOP_SESSION" =~ ^(Xfce Session|xfce session|XFCE|xfce|Xubuntu|xubuntu)$ ]]; then SETTER="xfconf-query --channel xfce4-desktop --property /backdrop/screen$SCREEN/monitor$MONITOR/workspace0/last-image --set"; 
+	elif [[ "$DESKTOP_SESSION" =~ ^(LXDE|Lxde|lxde)$ ]]; then SETTER="pcmanfm --set-wallpaper"; 
+	elif [[ "$DESKTOP_SESSION" =~ ^(PANTHEON|Pantheon|pantheon|GNOME|Gnome|gnome|UBUNTU|Ubuntu|ubuntu|DEEPIN|Deepin|deepin)$ ]]; then SETTER="gsettings set org.gnome.desktop.background picture-uri"; 
+	else SETTER="hsetroot -fill"; fi ;;
+	*) if [ -n "$SWAYSOCK" ]; then SETTER="eval ogurictl output '*' --image"; 
+	elif [[ "$DESKTOP_SESSION" =~ ^(MATE|Mate|mate)$ ]]; then SETTER="gsettings set org.mate.background picture-filename"; 
+	elif [[ "$DESKTOP_SESSION" =~ ^(Xfce Session|xfce session|XFCE|xfce|Xubuntu|xubuntu)$ ]]; then SETTER="xfconf-query --channel xfce4-desktop --property /backdrop/screen$SCREEN/monitor$MONITOR/workspace0/last-image --set"; 
+	elif [[ "$DESKTOP_SESSION" =~ ^(LXDE|Lxde|lxde)$ ]]; then SETTER="pcmanfm --set-wallpaper"; 
+	elif [[ "$DESKTOP_SESSION" =~ ^(PANTHEON|Pantheon|pantheon|GNOME|Gnome|gnome|UBUNTU|Ubuntu|ubuntu|DEEPIN|Deepin|deepin)$ ]]; then SETTER="gsettings set org.gnome.desktop.background picture-uri"; 
+	else SETTER="hsetroot -fill"; fi ;;
 esac
 
 ## Style 1 - Cartoon #############################################
@@ -55,7 +69,7 @@ function main {
         $SETTER $DIR/images/cartoon/charge.png; sleep 5
     ## Change According To Battery Percentage
     else
-        num=$(($BATTERY/25+"1"))
+        num=$(($BATTERY/25+1))
         set_wallpaper_bat $num; sleep 5
     fi
 }
@@ -91,7 +105,7 @@ function main {
         set_wallpaper_charge $num; sleep 5
     ## Change According To Battery Percentage
     else
-        num=$(($BATTERY/20+"1"))
+        num=$(($BATTERY/20+1))
         set_wallpaper_bat $num; sleep 5
     fi
 }
@@ -127,7 +141,7 @@ function main {
         set_wallpaper_charge $num; sleep 5
     ## Change According To Battery Percentage
     else
-        num=$(($BATTERY/20+"1"))
+        num=$(($BATTERY/20+1))
         set_wallpaper_bat $num; sleep 5
     fi
 }
@@ -163,7 +177,7 @@ function main {
         set_wallpaper_charge $num; sleep 5
     ## Change According To Battery Percentage
     else
-        num=$(($BATTERY/20+"1"))
+        num=$(($BATTERY/20+1))
         set_wallpaper_bat $num; sleep 5
     fi
 }
@@ -199,7 +213,7 @@ function main {
         set_wallpaper_charge $num; sleep 5
     ## Change According To Battery Percentage
     else
-        num=$(($BATTERY/25+"1"))
+        num=$(($BATTERY/25+1))
         set_wallpaper_bat $num; sleep 5
     fi
 }
@@ -234,7 +248,7 @@ function main {
         $SETTER $DIR/images/faded/charge.png; sleep 5
     ## Change According To Battery Percentage
     else
-        num=$(($BATTERY/25+"1"))
+        num=$(($BATTERY/25+1))
         set_wallpaper_bat $num; sleep 5
     fi
 }
@@ -270,7 +284,7 @@ function main {
         set_wallpaper_charge $num; sleep 5
     ## Change According To Battery Percentage
     else
-        num=$(($BATTERY/20+"1"))
+        num=$(($BATTERY/20+1))
         set_wallpaper_bat $num; sleep 5
     fi
 }
@@ -305,7 +319,7 @@ function main {
         $SETTER $DIR/images/mechanical/charge.png; sleep 5
     ## Change According To Battery Percentage
     else
-        num=$(($BATTERY/25+"1"))
+        num=$(($BATTERY/25+1))
         set_wallpaper_bat $num; sleep 5
     fi
 }
@@ -340,7 +354,7 @@ function main {
         $SETTER $DIR/images/paper/charge.png; sleep 5
     ## Change According To Battery Percentage
     else
-        num=$(($BATTERY/25+"1"))
+        num=$(($BATTERY/25+1))
         set_wallpaper_bat $num; sleep 5
     fi
 }
@@ -376,7 +390,7 @@ function main {
         set_wallpaper_charge $num; sleep 5
     ## Change According To Battery Percentage
     else
-        num=$(($BATTERY/20+"1"))
+        num=$(($BATTERY/20+1))
         set_wallpaper_bat $num; sleep 5
     fi
 }
